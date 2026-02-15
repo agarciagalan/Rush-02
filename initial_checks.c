@@ -4,11 +4,10 @@
 s_dict	*ft_get_dictionary(char *dict_path, s_dict *dict);
 s_dict	*ft_dict_create();
 
-s_dict	*ft_dict_check(char *dict_path)
+s_dict	*ft_dict_check(char *dict_path, s_dict *dict)
 {
 	s_dict	*dict;
-	if ((dict=ft_dict_create()) != NULL)
-		ft_get_dictionary(dict_path, dict);
+	ft_get_dictionary(dict_path, dict);
 	return(dict);
 }
 
