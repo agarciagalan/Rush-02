@@ -24,3 +24,10 @@ int		ft_strcmp(char *s1, char *s2)
 	}
 	return (0);
 }
+
+int		ft_isdigit(char str)
+{
+	if (str >= '0' && str <= '9')
+		return (1);
+	return (0);
+}
