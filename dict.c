@@ -6,6 +6,7 @@
 #define BUFFER_SIZE 128
 
 // int		ft_strcmp(char *s1, char *s2);
+int		ft_isdigit(char str);
 
 // File functions //
 int		ft_file_length(char *dict_path)
@@ -79,47 +80,56 @@ void	ft_dict_destroy(s_dict *dict)
 	free(dict);
 }
 
-s_entry	*ft_create_entry(char *text)
+int		ft_check_keys(char *text)
 {
-	s_entry entry;
-	int		index;
-	int		state;
-	char	key[80];
-	char	value[];
 	
-	state = 0;
-	while (text[index])
+}
+
+s_entry	*ft_create_entry(char *text, char *key, char *value)
+{
+	s_entry *entry;
+
+	while (ft_isdigit(*text))
 	{
-		if ((text[index] < '0' || text[index] > '9' ) && state == 0)
-			return (NULL);
-		else if ((text[index] >= '0' && text[index] <= '9' ) && state == 0)
-			
-		else if (text[index] == ':' && state == 0)
-			state++;
-		else if 
-		index++;
+		text++;
 	}
-		
+	if (key == NULL)
+		return (NULL);
+	else
+		entry->key = key;
+	while (*text == ' ')
+		text++;
+	if (*text != ':')
+		return (NULL);
+	else
+		text++;
+	while (*text == ' ')
+		text++;
+	while (*text >= 32 && *text <= 126)
+	{
+		*value = *text;
+		value++;
+		text++;
+	}
+	if (value == NULL)
+		return (NULL);
+	else
+		entry->value = value;
+	return (entry);
 }
 
 s_dict	*ft_parse_dictionary(char *text, s_dict *dict)
 {
-	int		text_index;
-	int		line_index;
 	char	line[200];
+	char	*key;
+	char	*value;
+	s_entry	*entry;
 
-	text_index = 0;
-	line_index = 0;
+	key = malloc(50 * sizeof(char));
+	value = malloc(50 * sizeof(char));
 	while (text[text_index])
 	{
-		if (text[text_index] == '\n')
-		{
-
-			line_index = 0;
-			continue ;
-		}
-		line[line_index] = text[text_index];
-		text_index++;
+		
 	}
 	return (dict);
 }
@@ -133,14 +143,16 @@ s_dict	*ft_get_dictionary(char *dict_path, s_dict *dict)
 	char	*text;
 
 	if((file_description=open(dict_path, O_RDONLY)) == -1)
-		return (dict);
+		return (NULL);
 	if((content=read(file_description, buffer, BUFFER_SIZE)) == -1)
-		return (dict);
+		return (NULL);
 	else
 	{
 		file_size = ft_file_length(dict_path);
 		text = malloc(file_size * sizeof(char*));
 		ft_get_text(file_description, text);
+		if ((ft_check_keys(text)))
+			return (NULL);
 		ft_parse_dictionary(text, dict);
 	}
 	close(file_description);
